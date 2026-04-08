@@ -9,10 +9,10 @@ function initPopus() {
   const closeImg = document.querySelector(".popup__addCard-close");
 
   function openPopup(popup) {
-    popup.class.list.add("popup_opened");
+    popup.classList.add("popup_opened");
   }
   function closePopup(popup) {
-    popup.class.list.remove("popup_opened");
+    popup.classList.remove("popup_opened");
   }
 
   openProfile.addEventListener("click", () => {

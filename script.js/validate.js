@@ -22,11 +22,11 @@ forms.forEach((form) => {
           input.setCustomValidity("Este campo es obligatorio.");
         } else if (input.validity.tooShort) {
           input.setCustomValidity(
-            `Debe tener al menos ${input.minLength} caracteres.`
+            `Debe tener al menos ${input.minLength} caracteres.`,
           );
         } else if (input.validity.tooLong) {
           input.setCustomValidity(
-            `Debe tener como máximo ${input.maxLength} caracteres.`
+            `Debe tener como máximo ${input.maxLength} caracteres.`,
           );
         } else if (input.validity.typeMismatch && input.type === "email") {
           input.setCustomValidity("Introduce un correo electrónico válido.");
@@ -38,3 +38,4 @@ forms.forEach((form) => {
     });
   });
 });
+export const aboutProfile = document.querySelector(".content__profile-parrafo");

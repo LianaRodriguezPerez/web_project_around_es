@@ -1,4 +1,4 @@
-export function handleFormSubmit(formElement, createCard, contenedorPhoto) {
+export function handleFormSubmit(formElement, createCard) {
   formElement.addEventListener("submit", (event) => {
     event.preventDefault();
 
@@ -11,8 +11,10 @@ export function handleFormSubmit(formElement, createCard, contenedorPhoto) {
         name: inputName,
       };
 
-      createCard(nuevaImagen, contenedorPhoto);
+      createCard(nuevaImagen);
       formElement.reset();
+
+      formElement.closest(".popup__add").classList.remove("popup_opened");
     } else {
       alert("Por favor completa ambos campos.");
     }

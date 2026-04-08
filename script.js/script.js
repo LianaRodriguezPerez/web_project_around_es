@@ -15,12 +15,14 @@ function createInitialCards() {
   });
 }
 createInitialCards();
-const formElement = document.querySelector(".popup__form");
+const formElement = document.querySelector(".popup__add-form");
 
 handleFormSubmit(formElement, (data) => {
-  const cardElement = createCardInstance(data);
+  const card = new Card(data, "#photos-template");
+  const cardElement = card.generateCard();
   contenedorPhoto.prepend(cardElement);
 });
+console.log("submit funcionando");
 
 const formProfile = document.querySelector(".popup__container-formulario");
 const nameProfile = document.querySelector(".content__profile-name");
@@ -36,7 +38,6 @@ function handleProfileFormSubmit(evt) {
 
   nameProfile.textContent = nameValue;
   aboutProfile.textContent = aboutValue;
-  windowPopupProfile.style.display = "none";
 }
 formProfile.addEventListener("submit", handleProfileFormSubmit);
 
