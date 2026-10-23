@@ -7,18 +7,18 @@
     <meta name="keywords" content="html, css, javascript" />
     <meta name="author" content="Lia Rodriguez" />
     <title>Alrededor de los EEUU</title>
-    <link rel="stylesheet" href="./pages/index.css" />
+    <link rel="stylesheet" href="./index.css" />
   </head>
   <body class="page">
     <header class="header">
-      <img class="header_logo" src="images/logo.jpg" alt="Logo" />
+      <img class="header_logo" src="../images/logo.jpg" alt="Logo" />
       <hr />
     </header>
     <main class="content">
       <section class="content__profile">
         <img
           class="content__profile-image"
-          src="images/image_profile.jpg"
+          src="../images/image_profile.jpg"
           alt="Foto Perfil"
         />
         <div class="content__profile-datos">
@@ -32,7 +32,7 @@
       <section class="popup">
         <div class="popup__container active">
           <button class="popup__container-close">
-            <img src="images/button_cerrar.png" alt="cerrar" />
+            <img src="../images/button_cerrar.png" alt="cerrar" />
           </button>
 
           <form
@@ -109,18 +109,19 @@
         </div>
       </section>
 
-      <section class="photos">
-        <template id="photos-template">
-          <div class="photo">
-            <img class="photos__link" src="" alt="" />
-            <div class="photos__div">
-              <h3 class="photos__name-image"></h3>
-              <button class="photo__like"></button>
+      <section class="cards"> </section>
+      
+        <template id="card-template">
+          <div class="card">
+            <img class="card__link" src="" alt="" />
+            <div class="card__div">
+              <h3 class="card__name-image"></h3>
+              <button class="card__like"></button>
             </div>
-            <button class="photo__delete"></button>
+            <button class="card__delete"></button>
           </div>
         </template>
-      </section>
+      
 
       <section class="popup__image">
         <div class="popup__image-content">
@@ -133,8 +134,6 @@
     <footer class="footer">
       <p class="footer__copyright">&#169; 2024 Around The U.S.</p>
     </footer>
-    <script type="module" src="script.js/script.js"></script>
-    <script type="module" src="script.js/card.js"></script>
-    <script type="module" src="script.js/validate.js"></script>
+    <script type="module" src="./index.js"></script>
   </body>
 </html>

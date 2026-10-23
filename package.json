@@ -1,0 +1,21 @@
+{
+  "name": "web_project_around",
+  "version": "1.0.0",
+  "description": "Este proyecto consiste en la creaciòn de una pagina web responsiva, donde se podrá agregar nuevas imagenes que el sitio solicite.\r ## Objetivo \r El objetivo principal de este proyecto es aplicar los conocimientos aprendidos sobre web responsive, lògica y métodos de programación en JavaScript.",
+  "main": "script.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LianaRodriguezPerez/web_project_around.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/LianaRodriguezPerez/web_project_around/issues"
+  },
+  "homepage": "https://github.com/LianaRodriguezPerez/web_project_around#readme"
+}
