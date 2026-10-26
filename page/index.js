@@ -1,69 +1,79 @@
 import { Card } from "../components/card.js";
-import Section from "../components/Section.js";
+import { FormValidator } from "../components/formValidator.js";
 import PopupWithForm from "../components/PopupWithForm.js";
 import PopupWithImage from "../components/PopupWithImage.js";
+import Section from "../components/Section.js";
+import UserInfo from "../components/UserInfo.js";
 import { initialCards } from "../components/utils.js";
 
-// 1. Perfil real de tu HTML
-const profileName = document.querySelector(".content__profile-name");
-const profileJob = document.querySelector(".content__profile-parrafo");
+const validationConfig = {
+  formSelector: ".popup__form",
+  inputSelector: ".popup__input",
+  submitButtonSelector: "button[type='submit'], .popup__container-save",
+  inactiveButtonClass: "popup__button_disabled",
+  inputErrorClass: "popup__input_type_error",
+  errorClass: "form__input-error_active",
+};
 
-// 2. Popup imagen grande
-const popupImage = new PopupWithImage(".popup__image");
-popupImage.setEventListeners();
+// Tus clases REALES del HTML
+const profileEditButton = document.querySelector(".content__profile-button");
+const profileAddButton = document.querySelector(".content__profile-editar");
 
-// 3. Lista de tarjetas - TU contenedor es .cards
-const cardsList = new Section(
+const userInfo = new UserInfo({
+  nameSelector: ".content__profile-name",
+  jobSelector: ".content__profile-parrafo",
+});
+
+const imagePopup = new PopupWithImage(".popup__image");
+imagePopup.setEventListeners();
+
+const cardList = new Section(
   {
     items: initialCards,
     renderer: (item) => {
-      const card = new Card(item, "#card-template", (link, name) => {
-        popupImage.open(link, name);
+      const card = new Card(item, "#card-template", (name, link) => {
+        imagePopup.open({ name, link });
       });
-      cardsList.addItem(card.generateCard());
+      return card.generateCard();
     },
   },
   ".cards",
 );
 
-cardsList.renderItems();
+cardList.renderItems();
 
-// 4. Popup perfil - ESTE YA TE FUNCIONA
-const popupProfile = new PopupWithForm(".popup", (data) => {
-  profileName.textContent = data.name;
-  profileJob.textContent = data.about;
+const profilePopup = new PopupWithForm(".popup_type_edit", (data) => {
+  // tu input se llama "about" no "job"
+  userInfo.setUserInfo({ name: data.name, job: data.about });
+  profilePopup.close();
 });
-popupProfile.setEventListeners();
+profilePopup.setEventListeners();
 
-document
-  .querySelector(".content__profile-button")
-  .addEventListener("click", () => {
-    const form = document.querySelector(".popup form");
-    form.querySelector('[name="name"]').value = profileName.textContent;
-    form.querySelector('[name="about"]').value = profileJob.textContent;
-    popupProfile.open();
+const addCardPopup = new PopupWithForm(".popup_type_add", (data) => {
+  // ahora data.name viene del input que corregiste
+  const newCardData = { name: data.name, link: data.link };
+  const newCard = new Card(newCardData, "#card-template", (name, link) => {
+    imagePopup.open({ name, link });
   });
+  cardList.addItem(newCard.generateCard());
+  addCardPopup.close();
+});
+addCardPopup.setEventListeners();
 
-// 5. Popup añadir imagen - ESTE ES EL QUE NO TE GUARDABA
-const popupAdd = new PopupWithForm(".popup__add", (data) => {
-  console.log("Guardando:", data);
-
-  const newCard = {
-    name: data.title__iamgen, // con tu typo exacto
-    link: data.link,
-  };
-
-  const card = new Card(newCard, "#card-template", (link, name) => {
-    popupImage.open(link, name);
-  });
-
-  cardsList.addItem(card.generateCard());
+profileEditButton.addEventListener("click", () => {
+  const current = userInfo.getUserInfo();
+  document.querySelector("#name-input").value = current.name;
+  document.querySelector("#about-input").value = current.job;
+  profilePopup.open();
 });
 
-popupAdd.setEventListeners();
+profileAddButton.addEventListener("click", () => {
+  addCardPopup.open();
+});
 
-document
-  .querySelector(".content__profile-editar")
-  .addEventListener("click", () => {
-    popupAdd.open();
-  });
+// Validación
+const forms = document.querySelectorAll(validationConfig.formSelector);
+forms.forEach((form) => {
+  const validator = new FormValidator(validationConfig, form);
+  validator.enableValidation();
+});

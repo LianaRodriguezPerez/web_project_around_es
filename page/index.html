@@ -29,7 +29,7 @@
         <button class="content__profile-editar">+</button>
       </section>
 
-      <section class="popup">
+      <section class="popup popup_type_edit">
         <div class="popup__container active">
           <button class="popup__container-close">
             <img src="../images/button_cerrar.png" alt="cerrar" />
@@ -74,17 +74,17 @@
         </div>
       </section>
 
-      <section class="popup__add">
+      <section class="popup popup__add popup_type_add">
         <div class="popup__add-div">
           <button class="popup__addCard-close">&times;</button>
 
           <form class="popup__add-form popup__form" name="form2" novalidate>
             <h2 class="popup__container-editar">Nuevo Lugar</h2>
 
-            <label for="title__iamgen"></label>
+            <label for="name"></label>
             <input
               type="text"
-              name="title__iamgen"
+              name="name"
               id="title__imagen"
               class="popup__addCard-title popup__input"
               placeholder="Título de la imagen"
@@ -123,7 +123,7 @@
         </template>
       
 
-      <section class="popup__image">
+      <section class="popup popup__image">
         <div class="popup__image-content">
           <img class="popup__image-photo" src="" alt="Imagen ampliada" />
           <p class="popup__image-caption"></p>

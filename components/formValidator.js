@@ -1,22 +1,77 @@
-export function handleFormSubmit(formElement, createCard) {
-  formElement.addEventListener("submit", (event) => {
-    event.preventDefault();
+// components/formValidator.js
+export class FormValidator {
+  constructor(config, formElement) {
+    this._config = config;
+    this._formElement = formElement;
+    this._inputList = Array.from(
+      this._formElement.querySelectorAll(this._config.inputSelector),
+    );
+    // Busca el botón con tu selector, pero si no lo encuentra busca cualquier botón submit
+    this._buttonElement =
+      this._formElement.querySelector(this._config.submitButtonSelector) ||
+      this._formElement.querySelector('button[type="submit"]') ||
+      this._formElement.querySelector("button");
+  }
 
-    const inputName = formElement.querySelector(".popup__addCard-title").value;
-    const inputUrl = formElement.querySelector(".popup__addCard-link").value;
-
-    if (inputName && inputUrl) {
-      const nuevaImagen = {
-        link: inputUrl,
-        name: inputName,
-      };
-
-      createCard(nuevaImagen);
-      formElement.reset();
-
-      formElement.closest(".popup__add").classList.remove("popup_opened");
-    } else {
-      alert("Por favor completa ambos campos.");
+  _showInputError(inputElement, errorMessage) {
+    const errorElement = this._formElement.querySelector(
+      `#${inputElement.id}-error`,
+    );
+    inputElement.classList.add(this._config.inputErrorClass);
+    if (errorElement) {
+      errorElement.textContent = errorMessage;
+      errorElement.classList.add(this._config.errorClass);
     }
-  });
+  }
+
+  _hideInputError(inputElement) {
+    const errorElement = this._formElement.querySelector(
+      `#${inputElement.id}-error`,
+    );
+    inputElement.classList.remove(this._config.inputErrorClass);
+    if (errorElement) {
+      errorElement.textContent = "";
+      errorElement.classList.remove(this._config.errorClass);
+    }
+  }
+
+  _checkInputValidity(inputElement) {
+    if (!inputElement.validity.valid) {
+      this._showInputError(inputElement, inputElement.validationMessage);
+    } else {
+      this._hideInputError(inputElement);
+    }
+  }
+
+  _hasInvalidInput() {
+    return this._inputList.some((inputElement) => !inputElement.validity.valid);
+  }
+
+  _toggleButtonState() {
+    if (!this._buttonElement) return; // <- esto evita que se rompa si no encuentra el botón
+    if (this._hasInvalidInput()) {
+      this._buttonElement.classList.add(this._config.inactiveButtonClass);
+      this._buttonElement.disabled = true;
+    } else {
+      this._buttonElement.classList.remove(this._config.inactiveButtonClass);
+      this._buttonElement.disabled = false;
+    }
+  }
+
+  _setEventListeners() {
+    this._toggleButtonState();
+    this._inputList.forEach((inputElement) => {
+      inputElement.addEventListener("input", () => {
+        this._checkInputValidity(inputElement);
+        this._toggleButtonState();
+      });
+    });
+  }
+
+  enableValidation() {
+    this._formElement.addEventListener("submit", (evt) => {
+      evt.preventDefault();
+    });
+    this._setEventListeners();
+  }
 }
