@@ -1,4 +1,3 @@
-// components/formValidator.js
 export class FormValidator {
   constructor(config, formElement) {
     this._config = config;
@@ -6,16 +5,14 @@ export class FormValidator {
     this._inputList = Array.from(
       this._formElement.querySelectorAll(this._config.inputSelector),
     );
-    // Busca el botón con tu selector, pero si no lo encuentra busca cualquier botón submit
-    this._buttonElement =
-      this._formElement.querySelector(this._config.submitButtonSelector) ||
-      this._formElement.querySelector('button[type="submit"]') ||
-      this._formElement.querySelector("button");
+    this._buttonElement = this._formElement.querySelector(
+      this._config.submitButtonSelector,
+    );
   }
 
   _showInputError(inputElement, errorMessage) {
     const errorElement = this._formElement.querySelector(
-      `#${inputElement.id}-error`,
+      `.${inputElement.id}-error`,
     );
     inputElement.classList.add(this._config.inputErrorClass);
     if (errorElement) {
@@ -26,7 +23,7 @@ export class FormValidator {
 
   _hideInputError(inputElement) {
     const errorElement = this._formElement.querySelector(
-      `#${inputElement.id}-error`,
+      `.${inputElement.id}-error`,
     );
     inputElement.classList.remove(this._config.inputErrorClass);
     if (errorElement) {
@@ -48,7 +45,7 @@ export class FormValidator {
   }
 
   _toggleButtonState() {
-    if (!this._buttonElement) return; // <- esto evita que se rompa si no encuentra el botón
+    if (!this._buttonElement) return;
     if (this._hasInvalidInput()) {
       this._buttonElement.classList.add(this._config.inactiveButtonClass);
       this._buttonElement.disabled = true;
@@ -69,9 +66,11 @@ export class FormValidator {
   }
 
   enableValidation() {
-    this._formElement.addEventListener("submit", (evt) => {
-      evt.preventDefault();
-    });
     this._setEventListeners();
+  }
+
+  resetValidation() {
+    this._inputList.forEach((input) => this._hideInputError(input));
+    this._toggleButtonState();
   }
 }

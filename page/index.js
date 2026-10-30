@@ -14,8 +14,6 @@ const validationConfig = {
   inputErrorClass: "popup__input_type_error",
   errorClass: "form__input-error_active",
 };
-
-// Tus clases REALES del HTML
 const profileEditButton = document.querySelector(".content__profile-button");
 const profileAddButton = document.querySelector(".content__profile-editar");
 
@@ -43,14 +41,12 @@ const cardList = new Section(
 cardList.renderItems();
 
 const profilePopup = new PopupWithForm(".popup_type_edit", (data) => {
-  // tu input se llama "about" no "job"
   userInfo.setUserInfo({ name: data.name, job: data.about });
   profilePopup.close();
 });
 profilePopup.setEventListeners();
 
 const addCardPopup = new PopupWithForm(".popup_type_add", (data) => {
-  // ahora data.name viene del input que corregiste
   const newCardData = { name: data.name, link: data.link };
   const newCard = new Card(newCardData, "#card-template", (name, link) => {
     imagePopup.open({ name, link });
@@ -71,7 +67,6 @@ profileAddButton.addEventListener("click", () => {
   addCardPopup.open();
 });
 
-// Validación
 const forms = document.querySelectorAll(validationConfig.formSelector);
 forms.forEach((form) => {
   const validator = new FormValidator(validationConfig, form);

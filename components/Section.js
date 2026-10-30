@@ -7,28 +7,11 @@ export default class Section {
 
   renderItems() {
     this._items.forEach((item) => {
-      this._renderer(item);
+      this._container.append(this._renderer(item));
     });
   }
 
   addItem(element) {
     this._container.prepend(element);
-  }
-
-  // Para el renderer de arriba
-  _renderer(item) {
-    // esta función se sobrescribe desde index.js
-  }
-
-  // Truco: el renderer de index.js ya hace addItem, así que lo corregimos
-  // Esta versión alternativa que usan muchos:
-  renderItems() {
-    this._items.forEach((item) => {
-      const cardElement = this._renderer(item);
-      // si el renderer ya retorna el elemento, lo agregamos
-      if (cardElement) {
-        this._container.append(cardElement);
-      }
-    });
   }
 }
